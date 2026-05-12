@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://go.dev"><img src="https://img.shields.io/badge/Go-1.26+-00ADD8?style=flat-square&logo=go&logoColor=white" alt="Go"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-blue?style=flat-square" alt="License"></a>
   <a href="#"><img src="https://img.shields.io/badge/Platform-Linux%20%7C%20macOS-blue?style=flat-square" alt="Platform"></a>
   <a href="#"><img src="https://img.shields.io/badge/Team-Blue%20Team-0066cc?style=flat-square" alt="Blue Team"></a>
 </p>
@@ -26,8 +26,9 @@
 - **Dual Output Formats** -- Human-readable table or machine-parseable JSON for SIEM integration
 - **Graceful Shutdown** -- Signal handling (SIGINT/SIGTERM) with session summary on exit
 - **Structured Logging** -- Leveled logging (debug, info, warn, error) via `slog`
-- **Zero Dependencies** -- Pure Go standard library, no third-party packages
-- **Static Binary** -- Single binary deployment, no runtime dependencies
+- **Minimal Go Dependency Surface** -- Pure Go standard library, no third-party Go packages
+- **Native OS Tooling Integration** -- Uses `ss`/`netstat` on Linux and `lsof`/`ps` on macOS for connection and process visibility
+- **Static Binary** -- Single binary deployment with no bundled runtime dependencies
 
 ## Quick Start
 
@@ -38,6 +39,12 @@ git clone https://github.com/jennofrie/shell-Ender.git
 cd shell-Ender
 go build -o shell-Ender .
 ```
+
+### Runtime requirements
+
+- Linux: `ss` preferred, `netstat` as fallback
+- macOS: `lsof` and `ps`
+- Root or `sudo` recommended for full process visibility
 
 ### Run a scan
 

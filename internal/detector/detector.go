@@ -2,6 +2,7 @@ package detector
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 	"runtime"
 	"strconv"
@@ -12,13 +13,13 @@ import (
 
 // Connection represents a detected network connection tied to a process.
 type Connection struct {
-	Protocol  string // "tcp", "tcp6", "udp"
-	LocalAddr string // local ip:port
+	Protocol   string // "tcp", "tcp6", "udp"
+	LocalAddr  string // local ip:port
 	RemoteAddr string // remote ip:port
-	State     string // "ESTABLISHED", "LISTEN", etc.
-	PID       int
-	Process   string // process name
-	Cmdline   string // full command line (best-effort)
+	State      string // "ESTABLISHED", "LISTEN", etc.
+	PID        int
+	Process    string // process name
+	Cmdline    string // full command line (best-effort)
 }
 
 // Alert represents a confirmed detection of a suspicious reverse shell.
@@ -287,7 +288,7 @@ func parseSSUsers(field string) (int, string) {
 
 // readProcCmdline reads /proc/PID/cmdline on Linux.
 func readProcCmdline(pid int) string {
-	out, err := exec.Command("cat", fmt.Sprintf("/proc/%d/cmdline", pid)).Output()
+	out, err := os.ReadFile(fmt.Sprintf("/proc/%d/cmdline", pid))
 	if err != nil {
 		return ""
 	}

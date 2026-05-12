@@ -1,13 +1,15 @@
 package detector
 
+import "strings"
+
 // Pattern defines a reverse shell detection pattern.
 type Pattern struct {
-	Name        string   // Human-readable name (e.g., "Bash Reverse Shell")
-	Category    string   // Category grouping (e.g., "shell", "scripting", "networking")
-	Severity    string   // "critical", "high", "medium", "low"
+	Name         string   // Human-readable name (e.g., "Bash Reverse Shell")
+	Category     string   // Category grouping (e.g., "shell", "scripting", "networking")
+	Severity     string   // "critical", "high", "medium", "low"
 	ProcessNames []string // Process names to match (case-insensitive)
-	Description string   // What this pattern detects
-	CmdPatterns []string // Suspicious command-line argument patterns (substring match)
+	Description  string   // What this pattern detects
+	CmdPatterns  []string // Suspicious command-line argument patterns (substring match)
 }
 
 // DefaultPatterns returns all built-in reverse shell detection patterns.
@@ -164,7 +166,7 @@ func ProcessNameSet() map[string]struct{} {
 	set := make(map[string]struct{})
 	for _, p := range DefaultPatterns() {
 		for _, name := range p.ProcessNames {
-			set[name] = struct{}{}
+			set[strings.ToLower(name)] = struct{}{}
 		}
 	}
 	return set
